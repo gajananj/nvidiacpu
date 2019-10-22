@@ -1,0 +1,15 @@
+
+
+config  NVPOWER
+        tristate "Nvidia cpu frequency"
+        help
+          This option allows the print nvidia tx2 cpu frequency and you  can be see value from userspace
+
+config NVCPU
+	tristate "lsnvcpu nvcpuinfo"
+	help
+	  This option use for printing cpuinfo like cpu arch,cpu vriant,cpu version,cpu processor etc.
+
+
+
+

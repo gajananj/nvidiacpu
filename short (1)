@@ -1,0 +1,155 @@
+
+
+
+
+	export CROSS_COMPILE=/opt/Jetpack3.0/install/bin/aarch64-unknown-linux-gnu-
+	export ARCH=arm64
+	export TEGRA_KERNEL_OUT=/home/spanidea/nvidia/tegra-kernel/r27.1.0_sources/images
+	export TEGRA_MODULES_OUT=/home/spanidea/nvidia/tegra-kernel/r27.1.0_sources/modules
+	mkdir -p $TEGRA_KERNEL_OUT
+	mkdir -p $TEGRA_MODULES_OUT
+
+	export CROSS_COMPILE=/opt/Jetpack3.0/install/bin/aarch64-unknown-linux-gnu-
+	export ARCH=arm64
+
+	export TOUT=/home/spanidea/NVIDIA-TX2/tegra-kernel/r27.1.0_sources/images
+	export MOUT=/home/spanidea/NVIDIA-TX2/tegra-kernel/r27.1.0_sources/modules
+	mkdir -p $TOUT
+	mkdir -p $MOUT
+
+
+echo $TEGRA_KERNEL_OUT
+
+cd /home/board
+
+make -C kernel/kernel-4.4/ mrproper -j4
+
+make -C kernel/kernel-4.4/ O=$TOUT tegra18_defconfig -j4                        ........(.conf file created)
+
+make -C kernel/kernel-4.4/ O=$TOUT menuconfig
+
+make -C kernel/kernel-4.4/ O=$TOUT zImage -j4
+
+make -C kernel/kernel-4.4/ O=$TOUT dtbs -j4
+
+make -C kernel/kernel-4.4/ O=$TOUT modules -j4
+
+make -C kernel/kernel-4.4/ O=$TOUT modules_install INSTALL_MOD_PATH=$MOUT -j4        ..........(.ko file created)
+
+
+cd /home/spanidea/JetPack3.0/64_TX2/Linux_for_Tegra_tx2/kernel$ ........rm kernel_supplements.tbz2 
+                                                                             rm kernel_headers.tbz2 
+
+///Tar-Ball Created at kernel4.4
+cd /home/spanidea/board/kernel/kernel-4.4$                       ............ sudo tar -cvf kernel_headers.tbz2 *
+cd /home/spanidea/board/tegra-kernel/r27.1.0_sources/modules/lib/modules/   ......... sudo tar -cvf kernel_supplements.tbz2 *
+ 
+
+
+	 cp /home/spanidea/NVIDIA-TX2/tegra-kernel/r27.1.0_sources/modules/lib/modules/kernel_supplements.tbz2   /home/spanidea/NVIDIA-FLASH/64_TX2/Linux_for_Tegra_tx2/kernel
+
+  cp  /home/spanidea/NVIDIA-TX2/kernel/kernel-4.4/kernel_headers.tbz2     /home/spanidea/NVIDIA-FLASH/64_TX2/Linux_for_Tegra_tx2/kernel 
+
+ cp -a /home/spanidea/NVIDIA-TX2/tegra-kernel/r27.1.0_sources/modules/lib/modules/4.4.15    /home/spanidea/NVIDIA-FLASH/64_TX2/Linux_for_Tegra_tx2/rootfs/lib/modules
+
+cp /home/spanidea/NVIDIA-TX2/tegra-kernel/r27.1.0_sources/images/arch/arm64/boot/Image   /home/spanidea/NVIDIA-FLASH/64_TX2/Linux_for_Tegra_tx2/kernel
+
+ sudo cp -r images/*  /home/spanidea/NVIDIA-FLASH/64_TX2/Linux_for_Tegra_tx2/rootfs/usr/src/linux-headers-4.4.15/
+
+
+==================================================================================================================================================================================
+
+(To copy tar-ball into Jetpack)
+sudo cp  /home/spanidea/nvidia/tegra-kernel/r27.1.0_sources/modules/lib/modules/kernel_supplements.tbz2 /home/spanidea/jetpack-3.0/64_TX2/Linux_for_Tegra_tx2/kernel
+
+sudo  cp -r /home/spanidea/nvidia/kernel/kernel-4.4/kernel_headers.tbz2    /home/spanidea/jetpack-3.0/64_TX2/Linux_for_Tegra_tx2/kernel 
+
+
+cp /home/spanidea/nvidia/tegra-kernel/r27.1.0_sources/modules/lib/modules/kernel_supplements.tbz2 /home/spanidea/jetpack-3.0/64_TX2/Linux_for_Tegra_tx2/kernel 
+
+ cp /home/spanidea/nvidia/kernel/kernel-4.4/kernel_headers.tbz2    /home/spanidea/jetpack-3.0/64_TX2/Linux_for_Tegra_tx2/kernel 
+
+
+
+sudo cp -a /home/spanidea/nvidia/tegra-kernel/r27.1.0_sources/modules/lib/modules/4.4.15   /home/spanidea/jetPack-3.0/64_TX2/Linux_for_Tegra_tx2/rootfs/lib/modules
+
+---->image copy path
+
+cp /home/spanidea/nvidia/tegra-kernel/r27.1.0_sources/images/arch/arm64/boot/Image  /home/spanidea/jetPack-3.0/64_TX2/Linux_for_Tegra_tx2/kernel
+
+check.... 
+cd home/spanidea/jetPack3.0/64_TX2/Linux_for_Tegra_tx2/rootfs/usr/src$ ls -l
+
+---->copy under linux-header-4.4.15(cd   /board/tegra-kernel/r27.1.0_sources)
+
+sudo cp -r images/* /home/spanidea/jetpack-3.0/64_TX2/Linux_for_Tegra_tx2/rootfs/usr/src/linux-headers-4.4.15/
+
+
+sudo cp -r images/* /home/spanidea/jetPack3.0/64_TX2/Linux_for_Tegra_tx2/rootfs/usr/src/linux-headers-4.4.15/   ------->linux-header-4.4.38
+
+
+Create directory under    /JetPack-L4T-3.0/64_TX2/Linux_for_Tegra_tx2/rootfs/usr/src  as linux-headers-4.4.38
+
+ sudo cp -a /home/spanidea/board/kernel/kernel-4.4/.  /home/spanidea/jetPack3.0/64_TX2/Linux_for_Tegra_tx2/rootfs/usr/src/linux-headers-4.4.15
+ ====================================================================================================================================================
+
+then remove kernel_headers.tbz2 
+sudo rm -rf kernel_headers.tbz2 
+
+To remove tegra directory  
+cd /JetPack-L4T-3.0/64_TX2/Linux_for_Tegra_tx2/rootfs/usr/src ls -l
+rm linux-headers-4.4.15-tegra
+
+
+cd /JetPack-L4T-3.0/64_TX2/Linux_for_Tegra_tx2/rootfs/lib/modules$ ls -l 
+ sudo rm -rf 4.4.15-tegra
+
+
+//cd JetPack-L4T-3.0/64_TX2/Linux_for_Tegra_tx2/kernel$ ls -l
+//rm Image
+
+
+
+Open other terminal(1) --sudo minicom
+again in another terminal(2) ----  cd /JetPack-L4T-3.0/64_TX2/Linux_for_Tegra_tx2$	 sudo ./flash.sh  jetson-tx2 mmcblk0p1
+
+In Terminal 2
+/lib/modules/4.4.38$ ls -l    file build    ....check ..will get broken link.
+file build                                  ....check ..will get broken link
+
+cd /usr/src/ ls                               ....check directory
+/usr/src/linux-headers-4.4.38$ ls 
+
+/usr/src/linux-headers-4.4.38/drivers/char$ ls 
+/lib/modules/4.4.38/kernel/drivers/char$ file fullchar.ko
+/lib/modules/4.4.38/kernel/drivers/char$ lsmod
+
+/lib/modules/4.4.38/kernel/drivers/char$ sudo insmod fullchr
+
+/lib/modules/4.4.38/kernel/drivers/char$ lsmod 
+
+/lib/modules/4.4.38$ ls -al 
+
+/lib/modules$ cd /usr/src/ ls -l
+ 
+ 
+ spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp unified.h /home/spanidea/NVIDIA-TX2/kernel/kernel-4.4/arch/arm64/include/asm/
+[sudo] password for spanidea: 
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp unified.h /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp cp15.h /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp procinfo.h /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp psci.h /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp pro /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+probes.h     processor.h  proc-fns.h   procinfo.h   prom.h       
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp prom.h /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp sy /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+sync_bitops.h  syscall.h      system_info.h  system_misc.h  
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp sys /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+syscall.h      system_info.h  system_misc.h  
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp system_info.h /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+spanidea@spanidea-Lenovo-V130-15IKB:~/NVIDIA-TX2/kernel/kernel-4.4/arch/arm/include/asm$ sudo cp system_misc.h /home/spanidea/nvidia/kernel/kernel-4.4/arch/arm64/include/asm
+
+
+
+
+

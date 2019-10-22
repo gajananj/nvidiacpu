@@ -1,0 +1,56 @@
+
+
+export CROSS_COMPILE=/opt/jetpack3.0/install/bin/aarch64-unknown-linux-gnu-
+
+export ARCH=arm64
+
+export TEGRA_KERNEL_OUT=/home/spanpunelt25/ashutosh/tx2/tegra-kernel/r27.1.0_sources/images/
+export TEGRA_MODULES_OUT=/home/spanpunelt25/ashutosh/tx2/tegra-kernel/r27.1.0_sources/modules/
+
+	mkdir -p $TEGRA_KERNEL_OUT
+	mkdir -p $TEGRA_MODULES_OUT
+
+echo $TEGRA_KERNEL_OUT
+
+make -C kernel/kernel-4.4/ mrproper -j4
+make -C kernel/kernel-4.4/ O=$TEGRA_KERNEL_OUT tegra18_defconfig -j4                        ........(.conf file created)
+
+make -C kernel/kernel-4.4/ O=$TEGRA_KERNEL_OUT menuconfig
+make -C kernel/kernel-4.4/ O=$TEGRA_KERNEL_OUT zImage -j4
+
+make -C kernel/kernel-4.4/ O=$TEGRA_KERNEL_OUT modules -j4
+
+make -C kernel/kernel-4.4/ O=$TEGRA_KERNEL_OUT modules_install INSTALL_MOD_PATH=$TEGRA_MODULES_OUT -j4
+
+
+cd /home/spanpunelt25/ashutosh/Jetpack-tool-source/jetpack/64_TX2/Linux_for_Tegra_tx2/kernel...........rm kernel_supplements.tbz2 
+                                                                             			     rm kernel_headers.tbz2 
+
+///Tar-Ball Created at kernel4.4
+cd /home/spanidea/board/kernel/kernel-4.4$                       ............ sudo tar -cvf kernel_headers.tbz2 *
+cd /home/spanpunelt25/ashutosh/tx2/tegra-kernel/r27.1.0_sources/modules/lib/modules .........sudo tar -cvf kernel_supplements.tbz2 *
+ 
+******************copy header files *****************************************
+cp /home/spanpunelt25/ashutosh/tx2/tegra-kernel/r27.1.0_sources/modules/lib/modules/kernel_supplements.tbz2 /home/spanpunelt25/ashutosh/Jetpack-tool-source/jetpack/64_TX2/Linux_for_Tegra_tx2/kernel
+cp /home/spanpunelt25/ashutosh/tx2/kernel/kernel-4.4/kernel_headers.tbz2 /home/spanpunelt25/ashutosh/Jetpack-tool-source/jetpack/64_TX2/Linux_for_Tegra_tx2/kernel
+
+***************copy modules **********************************************************************************************************************************************
+
+
+sudo cp -a /home/spanpunelt25/ashutosh/tx2/tegra-kernel/r27.1.0_sources/modules/lib/modules/4.4.15 /home/spanpunelt25/ashutosh/Jetpack-tool-source/jetpack/64_TX2/Linux_for_Tegra_tx2/rootfs/lib/modules
+
+**********Copy kernel image i.e image and zimage************************************************************************************************************************************
+
+
+cp /home/spanpunelt25/ashutosh/tx2/tegra-kernel/r27.1.0_sources/images/arch/arm64/boot/Image /home/spanpunelt25/ashutosh/Jetpack-tool-source/jetpack/64_TX2/Linux_for_Tegra_tx2/kernel
+
+*********copy header file******************************************************************************************************************************************
+
+/ashutosh/tx2/tegra-kernel/r27.1.0_sources$
+
+sudo cp -r images/* /home/spanpunelt25/ashutosh/Jetpack-tool-source/jetpack/64_TX2/Linux_for_Tegra_tx2/rootfs/usr/src/linux-headers-4.4.15/
+
+***************flash image*******************************************************************************************************************************************
+
+ /home/spanpunelt25/ashutosh/Jetpack-tool-source/jetpack/64_TX2/Linux_for_Tegra_tx2 $   sudo ./flash.sh jetson-tx2 mmcblk0p1
+
